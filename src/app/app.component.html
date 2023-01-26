@@ -1,0 +1,36 @@
+<h1 class="title animated jackInTheBox">{{title}}</h1>
+
+<ul class="animated flipInX" *ngIf="mode=='list'">
+    <p *ngIf="todos.length ==0"><small>Voce ainda não tem nehuma tarefa</small></p>
+    <li *ngFor="let todo of todos"> {{todo.title}} |
+        <button *ngIf="!todo.done" (click)="markAsDone(todo)">Concluir</button>
+        <button *ngIf="todo.done" (click)="markAsUndone(todo)">Refazer</button>
+        <button (click)="remove(todo)">Remover</button>
+    </li>
+</ul>
+<div id="modal" *ngIf="mode=='add'" class="animated flipInX">
+    <h1 class="text-center">Nova tarefa</h1>
+    <form [formGroup]="liveForm">
+        <label></label>
+        <input formControlName="tarefa" type="text" placeholder="Titulo da tarefa">
+        <small class="danger" *ngIf="liveForm.controls['tarefa'].errors">Este texto de conter em 3 e 60
+            caracters</small>
+        <p class="text-cetner">
+            <button class="button" [disabled]="liveForm.invalid" (click)="add()"><i class="fas fa-save"></i>
+                Salvar</button>
+        </p>
+
+    </form>
+    <br>
+    <br>
+</div>
+
+<button class="add-button animated fadeInUp button" (click)="changeMode('add')" *ngIf="mode=='list'">
+    <i class="fas fa-plus-circle"></i>
+    Nova Tarefa
+</button>
+
+<button class="add-button animated fadeInUp button" (click)="changeMode('list')" *ngIf="mode=='add'">
+    <i class="fas fa-plus-times"></i>
+    Cancelar
+</button>
